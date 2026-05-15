@@ -1,0 +1,22 @@
+strict digraph {
+"car_data.csv.dvc";
+"CAR_DETAILS_FROM_CAR_DEKHO.csv.dvc";
+"Car_details_v3.csv.dvc";
+"prepare";
+"train_lr";
+"train_dt";
+"train_rf";
+"train_cb";
+"train_xgb";
+"train_nn";
+"car_data.csv.dvc" -> "prepare";
+"CAR_DETAILS_FROM_CAR_DEKHO.csv.dvc" -> "prepare";
+"Car_details_v3.csv.dvc" -> "prepare";
+"prepare" -> "train_lr";
+"prepare" -> "train_dt";
+"prepare" -> "train_rf";
+"prepare" -> "train_cb";
+"prepare" -> "train_xgb";
+"prepare" -> "train_nn";
+}
+

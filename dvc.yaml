@@ -1,0 +1,135 @@
+stages:
+  prepare:
+    cmd: '"C:/Program Files/Python39/python.exe" src/prepare.py'
+    deps:
+      - car_data.csv
+      - Car_details_v3.csv
+      - CAR_DETAILS_FROM_CAR_DEKHO.csv
+      - src/prepare.py
+    outs:
+      - data/X_train.csv
+      - data/X_val.csv
+      - data/X_test.csv
+      - data/y_train.csv
+      - data/y_val.csv
+      - data/y_test.csv
+      - data/X_train_cb.csv
+      - data/X_val_cb.csv
+      - data/X_test_cb.csv
+      - data/y_train_cb.csv
+      - data/y_val_cb.csv
+      - data/y_test_cb.csv
+
+  train_lr:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_lr.py'
+    deps:
+      - data/X_train.csv
+      - data/y_train.csv
+      - data/X_val.csv
+      - data/y_val.csv
+      - data/X_test.csv
+      - data/y_test.csv
+      - src/train_lr.py
+    outs:
+      - models/lr.pkl
+      - figures/lr_real_vs_pred.png
+      - figures/lr_feature_importances.png
+    metrics:
+      - metrics/lr.json:
+          cache: false
+
+  train_dt:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_dt.py'
+    deps:
+      - data/X_train.csv
+      - data/y_train.csv
+      - data/X_val.csv
+      - data/y_val.csv
+      - data/X_test.csv
+      - data/y_test.csv
+      - src/train_dt.py
+    outs:
+      - models/dt.pkl
+      - figures/dt_tree.png
+      - figures/dt_real_vs_pred.png
+      - figures/dt_feature_importances.png
+    metrics:
+      - metrics/dt.json:
+          cache: false
+  
+  train_rf:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_rf.py'
+    deps:
+      - data/X_train.csv
+      - data/y_train.csv
+      - data/X_val.csv
+      - data/y_val.csv
+      - data/X_test.csv
+      - data/y_test.csv
+      - src/train_rf.py
+    outs:
+      - models/rf.pkl
+      - figures/rf_real_vs_pred.png
+      - figures/rf_feature_importances.png
+    metrics:
+      - metrics/rf.json:
+          cache: false
+
+  train_cb:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_cb.py'
+    deps:
+      - data/X_train_cb.csv
+      - data/X_val_cb.csv
+      - data/X_test_cb.csv
+      - data/y_train_cb.csv
+      - data/y_val_cb.csv
+      - data/y_test_cb.csv
+      - src/train_cb.py
+    outs:
+      - models/cb.cbm
+      - figures/cb_param_importances.png
+      - figures/cb_optimization_history.png
+      - figures/cb_real_vs_pred.png
+      - figures/cb_feature_importances.png
+    metrics:
+      - metrics/cb.json:
+          cache: false
+
+  train_xgb:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_xgb.py'
+    deps:
+      - data/X_train.csv
+      - data/y_train.csv
+      - data/X_val.csv
+      - data/y_val.csv
+      - data/X_test.csv
+      - data/y_test.csv
+      - src/train_xgb.py
+    outs:
+      - models/xgb.json
+      - figures/xgb_param_importances.png
+      - figures/xgb_optimization_history.png
+      - figures/xgb_real_vs_pred.png
+      - figures/xgb_feature_importances.png
+    metrics:
+      - metrics/xgb.json:
+          cache: false
+
+  train_nn:
+    cmd: '"C:/Program Files/Python39/python.exe" src/train_nn.py'
+    deps:
+      - data/X_train.csv
+      - data/y_train.csv
+      - data/X_val.csv
+      - data/y_val.csv
+      - data/X_test.csv
+      - data/y_test.csv
+      - src/train_nn.py
+    outs:
+      - models/nn.keras
+      - figures/nn_training_history.png
+      - figures/nn_real_vs_pred.png
+      - figures/nn_weight_histograms.png
+    metrics:
+      - metrics/nn.json:
+          cache: false
